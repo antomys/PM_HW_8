@@ -1,43 +1,100 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
 namespace DesignPatterns.Builder
 {
     public class CustomStringBuilder : ICustomStringBuilder
     {
+        private char[] _chars;
         public CustomStringBuilder()
         {
+            _chars = new char[16];
         }
 
         public CustomStringBuilder(string text)
         {
+            _chars = new char[text.Length];
+            _chars = text.ToCharArray();
         }
 
         public ICustomStringBuilder Append(string str)
         {
-            throw new System.NotImplementedException();
+            if (IsEmpty(_chars))
+            {
+                _chars = new char[str.Length];
+                _chars = str.ToCharArray();
+            }
+            else
+            {
+                var copyOfList = _chars;
+
+                var inputCharArray = str.ToCharArray();
+            
+                _chars = new char[copyOfList.Length + inputCharArray.Length];
+
+                /*for (var i = 0; i < copyOfList.Length; i++)
+                {
+                    _chars[i] = copyOfList[i];            //TODO: REMOVE THIS KOLXOZ
+                }
+
+                for (var i = 0; i < inputCharArray.Length; i++)
+                {
+                    _chars[copyOfList.Length + i ] = inputCharArray[i];
+                }*/
+                
+                copyOfList.CopyTo(_chars,0);
+                inputCharArray.CopyTo(_chars,copyOfList.Length);
+            }
+            return this;
         }
 
         public ICustomStringBuilder Append(char ch)
         {
-            throw new System.NotImplementedException();
+            if (IsEmpty(_chars))
+            {
+                _chars = new char[1];
+                _chars[^1] = ch;
+            }
+            else
+            {
+                var copyOfChars = _chars;
+                _chars = new char[_chars.Length + 1];
+                copyOfChars.CopyTo(_chars,0);
+                _chars[^1] = ch;
+            }
+
+            return this;
         }
 
         public ICustomStringBuilder AppendLine()
         {
-            throw new System.NotImplementedException();
+            return Append('\n');
         }
 
         public ICustomStringBuilder AppendLine(string str)
         {
-            throw new System.NotImplementedException();
+            return Append(str + '\n');
         }
 
         public ICustomStringBuilder AppendLine(char ch)
         {
-            throw new System.NotImplementedException();
+            return Append(ch.ToString()+'\n');
         }
 
         public string Build()
         {
-            throw new System.NotImplementedException();
+            return IsEmpty(_chars) ? string.Empty : new string(_chars);
         }
+
+        private static bool IsEmpty(IReadOnlyCollection<char> array)
+        {
+            var arrayLength = array.Count;
+            var counter = array.Count(element => element == (char) 0);
+
+            return arrayLength == counter;
+        }
+
     }
 }
