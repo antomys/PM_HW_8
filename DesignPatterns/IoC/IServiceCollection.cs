@@ -1,7 +1,6 @@
-﻿using System;
-
-namespace DesignPatterns.IoC
+﻿namespace DesignPatterns.IoC
 {
+    using System;
     public interface IServiceCollection
     {
         IServiceCollection AddTransient<T>();

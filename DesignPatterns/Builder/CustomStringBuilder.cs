@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 namespace DesignPatterns.Builder
 {
+    using System.Collections.Generic;
+    using System.Linq;
     public class CustomStringBuilder : ICustomStringBuilder
     {
         private char[] _chars;
@@ -33,16 +30,6 @@ namespace DesignPatterns.Builder
                 var inputCharArray = str.ToCharArray();
             
                 _chars = new char[copyOfList.Length + inputCharArray.Length];
-
-                /*for (var i = 0; i < copyOfList.Length; i++)
-                {
-                    _chars[i] = copyOfList[i];            //TODO: REMOVE THIS KOLXOZ
-                }
-
-                for (var i = 0; i < inputCharArray.Length; i++)
-                {
-                    _chars[copyOfList.Length + i ] = inputCharArray[i];
-                }*/
                 
                 copyOfList.CopyTo(_chars,0);
                 inputCharArray.CopyTo(_chars,copyOfList.Length);
@@ -61,6 +48,7 @@ namespace DesignPatterns.Builder
             {
                 var copyOfChars = _chars;
                 _chars = new char[_chars.Length + 1];
+                
                 copyOfChars.CopyTo(_chars,0);
                 _chars[^1] = ch;
             }
