@@ -1,4 +1,5 @@
 using DesignPatterns.ChainOfResponsibility;
+using DesignPatterns.ChainOfResponsibility.Impl;
 using Xunit;
 
 namespace DesignPatterns.UnitTests
