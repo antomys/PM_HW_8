@@ -1,4 +1,5 @@
 using DesignPatterns.IoC;
+using DesignPatterns.IoC.Impl;
 using Xunit;
 using IServiceProvider = DesignPatterns.IoC.IServiceProvider;
 

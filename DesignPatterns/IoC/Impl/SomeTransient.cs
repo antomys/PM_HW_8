@@ -1,10 +1,10 @@
-﻿namespace DesignPatterns.IoC
+﻿namespace DesignPatterns.IoC.Impl
 {
-    public class SomeSingleton
+    public class SomeTransient
     {
         private int _counter = 0;
 
-        public SomeSingleton()
+        public SomeTransient()
         {
             _counter++;
         }

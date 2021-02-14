@@ -1,4 +1,4 @@
-﻿namespace DesignPatterns.IoC
+﻿namespace DesignPatterns.IoC.Impl
 {
     public class SomeSecondTransient
     {
