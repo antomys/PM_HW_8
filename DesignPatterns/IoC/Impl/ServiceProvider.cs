@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Reflection;
 
 namespace DesignPatterns.IoC.Impl
 {
     public class ServiceProvider: IServiceProvider
     {
         private readonly Dictionary<Type, object> _singleton;
-        private  Dictionary<Type, object> _transient;
+        private readonly Dictionary<Type, object> _transient;
 
         public ServiceProvider(
             Dictionary<Type, object> singleton,
@@ -22,15 +20,14 @@ namespace DesignPatterns.IoC.Impl
         {
             return HandleResult<T>();
         }
-
         
-
         private T SearchInSingleton<T>()
         {
             try
             {
                 if (!_singleton.TryGetValue(typeof(T), out var value) || value != null)
                     return (T) _singleton[typeof(T)];
+                
                 value = (T) Activator.CreateInstance(typeof(T));
                 _singleton[typeof(T)] = value;
 
@@ -60,7 +57,6 @@ namespace DesignPatterns.IoC.Impl
                     case Func<IServiceProvider, T> factory:
                         return factory.Invoke(this);
                 }
-                //return (T) _transient[typeof(T)].Invoke(value.GetType());
             }
             return default;
             

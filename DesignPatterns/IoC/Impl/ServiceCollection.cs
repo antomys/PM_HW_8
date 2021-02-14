@@ -1,10 +1,8 @@
-using System.Linq;
-using DesignPatterns.IoC.Impl;
+using System;
+using System.Collections.Generic;
 
-namespace DesignPatterns.IoC
+namespace DesignPatterns.IoC.Impl
 {
-    using System;
-    using System.Collections.Generic;
     public class ServiceCollection : IServiceCollection
     {
         private readonly Dictionary<Type, object> _singleton = new Dictionary<Type, object>();
@@ -41,13 +39,10 @@ namespace DesignPatterns.IoC
         {
             _singleton.Add(typeof(T),null);
             return this;
-            //throw new NotImplementedException();
         }
 
         public IServiceCollection AddSingleton<T>(T service)
         {
-            /*var lazy = new Lazy<T>(service);
-            AddSingleton<T>(() => lazy.Value);*/
 
             if (!ContainsValue(_singleton, service))
             {
@@ -66,7 +61,6 @@ namespace DesignPatterns.IoC
             }
                 
             return this;
-            //throw new NotImplementedException();
         }
 
         public IServiceCollection AddSingleton<T>(Func<IServiceProvider, T> factory)
@@ -77,23 +71,16 @@ namespace DesignPatterns.IoC
                 _singleton.Add(typeof(T),process);
             }
             return this;
-            //throw new NotImplementedException();
         }
 
         public IServiceProvider BuildServiceProvider()
         {
-            //throw new NotImplementedException();
             return new ServiceProvider(_singleton,_transient);
         }
 
         private static bool ContainsValue(Dictionary<Type,object> dictionary, object value)
         {
             return dictionary.ContainsValue(value);
-        }
-        [Obsolete ("This method was used in trying to make with Dictionary<Type,Func<object>>")]
-        private static bool ContainsValue(Dictionary<Type,Func<object>> dictionary, object value)
-        {
-            return dictionary.Any(values => values.Value.Equals(value));
         }
     }
 }
